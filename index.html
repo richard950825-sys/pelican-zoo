@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f2eb" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https://*.supabase.co; frame-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'"
+    />
+    <title>鹈鹕动物园</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="./" aria-label="鹈鹕动物园首页">鹈鹕动物园</a>
+      <button class="upload-button" id="open-upload" type="button" aria-haspopup="dialog" aria-label="上传 HTML 作品" title="上传 HTML 作品">+</button>
+    </header>
+
+    <main>
+      <h1 class="sr-only">鹈鹕动物园作品墙</h1>
+      <p class="notice" id="notice" role="status" hidden></p>
+      <section class="gallery" id="gallery" aria-live="polite" aria-label="动态作品墙"></section>
+      <p class="empty-state" id="empty-state" hidden>第一只鹈鹕还没入园。</p>
+    </main>
+
+    <dialog id="upload-dialog" aria-labelledby="upload-title">
+      <form id="upload-form">
+        <div class="dialog-heading">
+          <h2 id="upload-title">新作品</h2>
+          <button class="close-button" id="close-upload" type="button" aria-label="关闭" title="关闭">×</button>
+        </div>
+        <label>
+          HTML 文件
+          <input id="html-file" name="html-file" type="file" accept=".html,text/html" required />
+        </label>
+        <label>
+          标题
+          <input id="title" name="title" type="text" maxlength="80" placeholder="默认使用文件名" />
+        </label>
+        <label>
+          生成模型
+          <select id="model" name="model" required>
+            <option value="GPT">GPT / Codex</option>
+            <option value="Claude">Claude</option>
+            <option value="Gemini">Gemini</option>
+            <option value="DeepSeek">DeepSeek</option>
+            <option value="Qwen">通义千问</option>
+            <option value="Kimi">Kimi</option>
+            <option value="GLM">GLM</option>
+            <option value="Doubao">豆包</option>
+            <option value="Other">其他</option>
+          </select>
+        </label>
+        <label id="other-model-field" hidden>
+          模型名称
+          <input id="model-detail" name="model-detail" type="text" maxlength="80" />
+        </label>
+        <p class="form-note">只接收一个不超过 5 MB 的 HTML 文件。</p>
+        <button class="publish-button" id="publish" type="submit">发布</button>
+      </form>
+    </dialog>
+
+    <template id="work-template">
+      <article class="work">
+        <iframe class="work-frame" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+        <div class="work-meta">
+          <strong class="work-title"></strong>
+          <span class="work-model"></span>
+        </div>
+      </article>
+    </template>
+
+    <script src="config.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

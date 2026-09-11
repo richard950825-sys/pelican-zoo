@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * { box-sizing: border-box; }
+      body { background: #b9ded5; margin: 0; overflow: hidden; }
+      .ground { background: #6d9d72; bottom: 0; height: 23%; position: fixed; width: 100%; }
+      .rider { animation: roll 4s linear infinite; bottom: 21%; height: 58%; left: -25%; position: fixed; width: 56%; }
+      .bird { background: #f4eee1; border-radius: 52% 48% 44% 45%; height: 48%; left: 34%; position: absolute; top: 0; width: 38%; }
+      .head { background: #f4eee1; border-radius: 50%; height: 45%; left: 56%; position: absolute; top: -20%; width: 35%; }
+      .eye { background: #19231e; border-radius: 50%; height: 10%; left: 77%; position: absolute; top: -6%; width: 10%; }
+      .beak { background: #e87348; border-radius: 65% 15% 62% 20%; height: 24%; left: 80%; position: absolute; top: 12%; transform: rotate(6deg); width: 42%; }
+      .wing { background: #a4b5ad; border-radius: 70% 25% 70% 25%; height: 44%; left: 23%; position: absolute; top: 25%; transform: rotate(27deg); width: 46%; }
+      .wheel { border: 7px solid #26352d; border-radius: 50%; bottom: 0; height: 37%; position: absolute; width: 26%; }
+      .wheel.left { left: 8%; } .wheel.right { right: 5%; }
+      .frame { border-bottom: 7px solid #e7633a; border-left: 7px solid transparent; border-right: 7px solid transparent; bottom: 19%; height: 0; left: 30%; position: absolute; transform: skew(-15deg); width: 39%; }
+      .handle { border-left: 6px solid #26352d; border-top: 6px solid #26352d; height: 28%; position: absolute; right: 23%; top: 39%; transform: rotate(-15deg); width: 16%; }
+      @keyframes roll { from { transform: translateX(0); } to { transform: translateX(235%); } }
+    </style>
+  </head>
+  <body>
+    <div class="ground"></div>
+    <div class="rider" role="img" aria-label="一只骑自行车的鹈鹕">
+      <div class="bird"></div><div class="head"></div><div class="eye"></div><div class="beak"></div><div class="wing"></div>
+      <div class="wheel left"></div><div class="wheel right"></div><div class="frame"></div><div class="handle"></div>
+    </div>
+  </body>
+</html>

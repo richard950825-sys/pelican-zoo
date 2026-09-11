@@ -1,0 +1,10 @@
+[
+  {
+    "id": "welcome",
+    "title": "试骑",
+    "model": "Other",
+    "model_detail": "示例",
+    "created_at": "2026-09-11T00:00:00.000Z",
+    "source_url": "examples/pelican-ride.html"
+  }
+]
