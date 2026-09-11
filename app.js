@@ -13,7 +13,8 @@ function addWork(work) {
   gallery.append(node);
 }
 
-fetch("works.json")
+// no-cache：每次都向 CDN 重新校验，避免新作品因浏览器缓存延迟出现
+fetch("works.json", { cache: "no-cache" })
   .then((response) => response.ok ? response.json() : Promise.reject(new Error("作品墙暂时无法加载。")))
   .then((works) => {
     works.forEach(addWork);
