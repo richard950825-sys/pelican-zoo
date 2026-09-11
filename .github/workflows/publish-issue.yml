@@ -7,6 +7,8 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: gallery-publish
@@ -32,6 +34,12 @@ jobs:
             git commit -m "Publish work from issue #${{ github.event.issue.number }}"
             git push
           fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
       - run: gh issue close "${{ github.event.issue.number }}" --comment "作品已发布到鹈鹕动物园。"
         env:
           GH_TOKEN: ${{ github.token }}
