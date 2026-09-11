@@ -1,5 +1,13 @@
 [
   {
+    "id": "issue-4",
+    "title": "mantis-tandem",
+    "model": "GPT / Codex",
+    "model_detail": "",
+    "created_at": "2026-09-11T09:45:27Z",
+    "source_url": "works/issue-4.html"
+  },
+  {
     "id": "issue-3",
     "title": "bicycle_riding_pelican_svg_animation",
     "model": "GPT / Codex",
