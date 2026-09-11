@@ -3,32 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f5f2eb" />
+    <meta name="theme-color" content="#f6f3ec" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'"
     />
-    <title>鹈鹕动物园</title>
+    <title>鹈鹕动物园 · 每只鹈鹕都会骑车</title>
+    <meta name="description" content="展示 AI 生成的鹈鹕骑自行车 HTML 作品的线上动物园，欢迎通过 GitHub Issue 投稿你的作品。" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Ccircle%20cx='32'%20cy='32'%20r='32'%20fill='%23e7633a'/%3E%3Ccircle%20cx='27'%20cy='27'%20r='13'%20fill='%23f6ead2'/%3E%3Cpath%20d='M38%2021%2059%2028%2038%2035z'%20fill='%23f6b26b'/%3E%3Ccircle%20cx='30.5'%20cy='24'%20r='2.6'%20fill='%23162019'/%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <svg class="sprite" aria-hidden="true" focusable="false">
+      <symbol id="pelican-logo" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="31" fill="#e7633a" />
+        <g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="19.5" cy="45" r="8.5" />
+          <circle cx="45" cy="45" r="8.5" />
+          <path d="M19.5 45 27 33.5h9.5L45 45" />
+          <path d="M19.5 45h14M27 33.5l6.5 11.5" />
+          <path d="M36.5 33.5 38.5 27.5M35 27.5h6.5" />
+        </g>
+        <circle cx="33.5" cy="45" r="2.2" fill="#fff" />
+        <ellipse cx="23" cy="26.5" rx="6.2" ry="8" fill="#fff" />
+        <circle cx="28.5" cy="14.5" r="4.6" fill="#fff" />
+        <path d="M31.5 12.5 44.5 17.5 31.5 20z" fill="#ffe1b0" />
+        <ellipse cx="21.5" cy="28" rx="3" ry="5" fill="#ffd9c7" transform="rotate(18 21.5 28)" />
+        <path d="M25.5 33.5 29.5 39.5 33.5 45" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="29.8" cy="13.6" r="1.3" fill="#1d2b22" />
+      </symbol>
+    </svg>
+
     <header class="site-header">
-      <a class="wordmark" href="./" aria-label="鹈鹕动物园首页">鹈鹕动物园</a>
-      <a class="upload-button" href="https://github.com/richard950825-sys/pelican-zoo/issues/new?template=upload.yml" target="_blank" rel="noopener" aria-label="上传 HTML 作品（新标签页打开）" title="上传 HTML 作品：提交后回到本页，会自动提示发布结果">+</a>
+      <a class="brand" href="./" aria-label="鹈鹕动物园首页">
+        <svg class="brand-logo" aria-hidden="true"><use href="#pelican-logo"></use></svg>
+        <span class="wordmark">鹈鹕动物园</span>
+      </a>
+      <a
+        class="upload-button"
+        href="https://github.com/richard950825-sys/pelican-zoo/issues/new?template=upload.yml"
+        target="_blank"
+        rel="noopener"
+        aria-label="上传 HTML 作品（新标签页打开）"
+        title="上传 HTML 作品：提交后回到本页，会自动提示发布结果"
+      >
+        <span class="plus" aria-hidden="true">+</span><span class="upload-text">上传作品</span>
+      </a>
     </header>
 
+    <section class="hero">
+      <div class="hero-inner">
+        <svg class="hero-badge" aria-hidden="true"><use href="#pelican-logo"></use></svg>
+        <div class="hero-copy">
+          <h1>鹈鹕动物园</h1>
+          <p>每一只鹈鹕都会骑自行车。挑一只 AI 画给你的慢慢看，也欢迎把你自己的作品送进园里 —— 一个 HTML 文件就够了。</p>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="https://github.com/richard950825-sys/pelican-zoo/issues/new?template=upload.yml"
+              target="_blank"
+              rel="noopener"
+              >＋ 上传我的鹈鹕</a
+            >
+            <a class="btn btn-ghost" href="#gallery">先逛逛作品墙</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scene" aria-hidden="true">
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="ground"></div>
+        <div class="rider">
+          <div class="bird"></div><div class="head"></div><div class="eye"></div><div class="beak"></div><div class="wing"></div>
+          <div class="wheel left"></div><div class="wheel right"></div><div class="frame"></div><div class="handle"></div>
+        </div>
+      </div>
+    </section>
+
     <main>
-      <h1 class="sr-only">鹈鹕动物园作品墙</h1>
+      <h2 class="section-title">最新入园</h2>
       <section class="gallery" id="gallery" aria-live="polite" aria-label="动态作品墙"></section>
-      <p class="empty-state" id="empty-state" hidden>第一只鹈鹕还没入园。</p>
+      <div class="empty-state" id="empty-state" hidden>
+        <svg class="empty-logo" aria-hidden="true"><use href="#pelican-logo"></use></svg>
+        <p id="empty-text">第一只鹈鹕还没入园。</p>
+      </div>
     </main>
+
+    <footer class="site-footer">
+      <p>
+        所有作品都在无 <code>allow-same-origin</code> 的沙箱 iframe 里骑行 · 由
+        <a href="https://github.com/richard950825-sys/pelican-zoo" target="_blank" rel="noopener">GitHub Issues</a> 驱动 ·
+        <a href="https://github.com/richard950825-sys/pelican-zoo/issues/new?template=upload.yml" target="_blank" rel="noopener">投稿</a>
+      </p>
+    </footer>
 
     <template id="work-template">
       <article class="work">
-        <iframe class="work-frame" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+        <iframe class="work-frame" sandbox="allow-scripts" referrerpolicy="no-referrer" loading="lazy"></iframe>
         <div class="work-meta">
           <strong class="work-title"></strong>
           <span class="work-model"></span>
+          <a class="work-open" target="_blank" rel="noopener" title="全屏打开作品" aria-label="在新标签页全屏打开作品">↗</a>
         </div>
       </article>
     </template>

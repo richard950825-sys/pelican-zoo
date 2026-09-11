@@ -1,5 +1,6 @@
 const gallery = document.querySelector("#gallery");
 const emptyState = document.querySelector("#empty-state");
+const emptyText = document.querySelector("#empty-text");
 const template = document.querySelector("#work-template");
 const uploadButton = document.querySelector(".upload-button");
 const issuesUrl = "https://github.com/richard950825-sys/pelican-zoo/issues";
@@ -19,6 +20,7 @@ function addWork(work) {
   frame.title = title;
   node.querySelector(".work-title").textContent = title;
   node.querySelector(".work-model").textContent = work.model_detail || work.model;
+  node.querySelector(".work-open").href = work.source_url;
   gallery.append(node);
 }
 
@@ -38,7 +40,7 @@ async function loadWorks() {
 
 loadWorks()
   .then(() => startWatcher())
-  .catch(() => { emptyState.textContent = "作品墙暂时无法加载。"; emptyState.hidden = false; });
+  .catch(() => { emptyText.textContent = "作品墙暂时无法加载。"; emptyState.hidden = false; });
 
 // 点击上传按钮时记下当前作品列表，作为之后检测“新作品”的基准
 uploadButton.addEventListener("click", () => {
