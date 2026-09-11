@@ -6,6 +6,10 @@ const body = issue.body || "";
 const maxBytes = 5 * 1024 * 1024;
 const models = new Set(["GPT / Codex", "Claude", "Gemini", "DeepSeek", "通义千问", "Kimi", "GLM", "豆包", "其他"]);
 
+// 沙箱 iframe 的滚动无法从外部控制，发布时注入一段脚本让作品加载后自行滚到内容中心
+const SCROLL_MARKER = "data-pelican-scroll";
+const scrollCenterScript = `<script data-pelican-scroll>window.addEventListener("load",function(){requestAnimationFrame(function(){var d=document.documentElement,b=document.body,w=Math.max(d.scrollWidth,b?b.scrollWidth:0),h=Math.max(d.scrollHeight,b?b.scrollHeight:0);window.scrollTo(Math.max(0,(w-window.innerWidth)/2),Math.max(0,(h-window.innerHeight)/2))})});</script>`;
+
 function section(label) {
   const start = `### ${label}`;
   const from = body.indexOf(start);
@@ -49,7 +53,13 @@ if (works.some((work) => work.id === id)) {
   process.exit(0);
 }
 await mkdir("works", { recursive: true });
-await writeFile(path, content);
+let html = content.toString("utf8");
+if (!html.includes(SCROLL_MARKER)) {
+  html = /<\/body>/i.test(html) ? html.replace(/<\/body>/i, `${scrollCenterScript}</body>`) : html + scrollCenterScript;
+}
+const payload = Buffer.from(html, "utf8");
+if (payload.length > maxBytes) throw new Error("文件超过 5 MB。");
+await writeFile(path, payload);
 works.unshift({ id, title, model, model_detail: modelDetail, created_at: issue.created_at, source_url: path });
 await writeFile("works.json", `${JSON.stringify(works, null, 2)}\n`);
 console.log(`Published ${path}`);

@@ -8,6 +8,7 @@ const issuesUrl = "https://github.com/richard950825-sys/pelican-zoo/issues";
 const PENDING_KEY = "pelican-zoo:pending-upload";
 const POLL_INTERVAL = 5000;
 const WATCH_WINDOW = 10 * 60 * 1000;
+const PROMPT = "创建一个HTML，内容是SVG绘制一个鹈鹕骑自行车的2D动画，你不需要任何测试";
 
 let works = [];
 let watcherRunning = false;
@@ -45,6 +46,25 @@ loadWorks()
 // 点击上传按钮时记下当前作品列表，作为之后检测“新作品”的基准
 uploadButton.addEventListener("click", () => {
   localStorage.setItem(PENDING_KEY, JSON.stringify({ t: Date.now(), ids: works.map((w) => w.id) }));
+});
+
+document.querySelector("#copy-prompt").addEventListener("click", async () => {
+  const done = () => showToast("提示词已复制，去粘贴给你的 Agent 吧。", null, 5000);
+  try {
+    await navigator.clipboard.writeText(PROMPT);
+    done();
+  } catch {
+    // 兼容不支持 clipboard API 的环境
+    const box = document.createElement("textarea");
+    box.className = "copy-helper";
+    box.value = PROMPT;
+    box.setAttribute("readonly", "");
+    document.body.append(box);
+    box.select();
+    document.execCommand("copy");
+    box.remove();
+    done();
+  }
 });
 
 document.addEventListener("visibilitychange", () => { if (!document.hidden) startWatcher(); });
