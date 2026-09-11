@@ -1,14 +1,12 @@
 # 鹈鹕动物园
 
-一个部署在 GitHub Pages 的动态 HTML 作品墙。每件作品由 Supabase Storage 托管，并以沙箱 iframe 运行；不需要也不会暴露自建服务器 IP。
+一个部署在 GitHub Pages 的动态 HTML 作品墙。上传文件通过 GitHub Issue 附件进入仓库，再由 GitHub Actions 发布；不需要也不会暴露自建服务器 IP。
 
 ## 上线
 
-1. 在 Supabase 新建一个项目，打开 **Authentication -> Providers -> Anonymous**，启用匿名登录。
-2. 在项目的 SQL Editor 运行 [`supabase/schema.sql`](supabase/schema.sql)。
-3. 把 Project URL 和 **anon public** key 填入 [`config.js`](config.js)。`anon` key 会被公开给浏览器，这是 Supabase 的设计；不要填写 `service_role` key。
-4. 推送 `main` 分支。GitHub Actions 会发布 GitHub Pages。
+1. 打开网站右上角的 `+`，使用 GitHub 的 Issue 表单附加一个不超过 5 MB 的 `.html` 文件，并选择生成模型。
+2. GitHub Actions 下载附件，校验名称和大小，把它写进 `works/`，更新 `works.json`，然后重新发布 GitHub Pages。
 
-上传内容会存到 Supabase 的 `works` bucket，作品信息存到 `works` 表。RLS 将上传文件限制为匿名用户自己的目录；主站通过没有 `allow-same-origin` 的 sandbox iframe 展示作品，上传的脚本无法读取或修改主站页面。
+作品依上传时间倒序显示。每个 HTML 文件在没有 `allow-same-origin` 的 sandbox iframe 中运行，无法读取或修改主站页面。提交人需要一个 GitHub 账号，因为附件由 GitHub Issue 接收。
 
-本仓库不包含服务器配置、服务器地址或服务器 IP。
+本仓库不包含服务器配置、服务器地址、服务器 IP 或第三方服务密钥。

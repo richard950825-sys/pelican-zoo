@@ -1,0 +1,46 @@
+name: 上传作品
+description: 提交一个会动的 HTML 作品
+title: "作品："
+labels: ["upload"]
+body:
+  - type: markdown
+    attributes:
+      value: "将一个不超过 5 MB 的 `.html` 文件拖入下面的文件框。作品会在沙箱中发布到鹈鹕动物园。"
+  - type: textarea
+    id: html-file
+    attributes:
+      label: HTML 文件
+      description: 拖入或选择一个 `.html` 文件。
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: 标题
+      description: 留空时使用文件名。
+      placeholder: 我的鹈鹕
+    validations:
+      required: false
+  - type: dropdown
+    id: model
+    attributes:
+      label: 生成模型
+      options:
+        - GPT / Codex
+        - Claude
+        - Gemini
+        - DeepSeek
+        - 通义千问
+        - Kimi
+        - GLM
+        - 豆包
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: model-detail
+    attributes:
+      label: 其他模型名称
+      description: 仅在选择“其他”时填写。
+    validations:
+      required: false
