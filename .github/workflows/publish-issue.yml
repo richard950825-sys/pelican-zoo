@@ -40,7 +40,7 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
-      - run: gh issue close "${{ github.event.issue.number }}" --comment "作品已发布到鹈鹕动物园。"
+      - run: gh issue close "${{ github.event.issue.number }}" --comment "作品已发布到鹈鹕动物园 👉 ${{ steps.deployment.outputs.page_url }} 点开即可看到你的新作。"
         env:
           GH_TOKEN: ${{ github.token }}
       - if: failure()

@@ -5,7 +5,7 @@ labels: ["upload"]
 body:
   - type: markdown
     attributes:
-      value: "将一个不超过 5 MB 的 `.html` 文件拖入下面的文件框。作品会在沙箱中发布到鹈鹕动物园。"
+      value: "将一个不超过 5 MB 的 `.html` 文件拖入下面的文件框。提交后发布约需 1 分钟：机器人会在本 issue 下评论并附上作品链接；如果上传前还开着鹈鹕动物园的页面，回到那个页面会自动提示发布结果并高亮你的作品。"
   - type: textarea
     id: html-file
     attributes:
