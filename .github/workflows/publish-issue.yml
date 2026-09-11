@@ -2,13 +2,11 @@ name: Publish submitted work
 
 on:
   issues:
-    types: [opened]
+    types: [opened, reopened, labeled]
 
 permissions:
   contents: write
   issues: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: gallery-publish
@@ -16,27 +14,28 @@ concurrency:
 
 jobs:
   publish:
-    if: contains(github.event.issue.labels.*.name, 'upload')
+    if: >-
+      (github.event.action == 'labeled' && github.event.label.name == 'upload') ||
+      (github.event.action != 'labeled' && contains(github.event.issue.labels.*.name, 'upload'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: node scripts/publish-issue.mjs
-      - run: |
+      - name: Commit and push
+        run: |
           git config user.name "pelican-zoo[bot]"
           git config user.email "pelican-zoo[bot]@users.noreply.github.com"
           git add works works.json
-          git commit -m "Publish work from issue #${{ github.event.issue.number }}"
-          git push
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          if git diff --cached --quiet; then
+            echo "Nothing to commit; work already published."
+          else
+            git commit -m "Publish work from issue #${{ github.event.issue.number }}"
+            git push
+          fi
       - run: gh issue close "${{ github.event.issue.number }}" --comment "作品已发布到鹈鹕动物园。"
         env:
           GH_TOKEN: ${{ github.token }}
       - if: failure()
-        run: gh issue comment "${{ github.event.issue.number }}" --body "发布失败：请确认附加的是不超过 5 MB 的 .html 文件。"
+        run: gh issue comment "${{ github.event.issue.number }}" --body "发布失败：请确认 issue 使用了「上传作品」模板、附加的是不超过 5 MB 的 .html 文件，并选择了生成模型。修复后可以重新打开本 issue 或补上 upload 标签重试。"
         env:
           GH_TOKEN: ${{ github.token }}
