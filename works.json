@@ -1,5 +1,13 @@
 [
   {
+    "id": "issue-12",
+    "title": "小Y",
+    "model": "DeepSeek",
+    "model_detail": "",
+    "created_at": "2026-09-17T09:37:38Z",
+    "source_url": "works/issue-12.html"
+  },
+  {
     "id": "issue-11",
     "title": "union alpha 创作的鹈鹕",
     "model": "其他",
