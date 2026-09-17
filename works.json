@@ -1,5 +1,13 @@
 [
   {
+    "id": "issue-11",
+    "title": "union alpha 创作的鹈鹕",
+    "model": "其他",
+    "model_detail": "union alpha",
+    "created_at": "2026-09-17T07:28:23Z",
+    "source_url": "works/issue-11.html"
+  },
+  {
     "id": "issue-10",
     "title": "pelican",
     "model": "GPT / Codex",

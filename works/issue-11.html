@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鹈鹕骑自行车</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#7ec8f7 0%, #b8e4fb 55%, #e8f7ff 100%);
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+  }
+  .sun {
+    position: absolute;
+    top: 8%;
+    right: 12%;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff3b0, #ffd54d 60%, #ffb84d);
+    box-shadow: 0 0 60px rgba(255, 210, 80, .8);
+    animation: sunPulse 5s ease-in-out infinite;
+  }
+  @keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  .cloud {
+    position: absolute;
+    width: 160px;
+    height: 52px;
+    background: #fff;
+    border-radius: 60px;
+    opacity: .9;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,.06));
+  }
+  .cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .cloud::before { width: 70px; height: 70px; top: -32px; left: 24px; }
+  .cloud::after  { width: 52px; height: 52px; top: -20px; left: 82px; }
+  .cloud.c1 { top: 14%; animation: drift 38s linear infinite; }
+  .cloud.c2 { top: 30%; transform: scale(.65); animation: drift 52s linear infinite; animation-delay: -18s; }
+  .cloud.c3 { top: 8%;  transform: scale(.8);  animation: drift 45s linear infinite; animation-delay: -30s; }
+  @keyframes drift {
+    from { left: -220px; }
+    to   { left: 105%; }
+  }
+  .hills {
+    position: absolute;
+    bottom: 120px;
+    width: 200%;
+    height: 180px;
+    background:
+      radial-gradient(circle at 25% 100%, #a8d8a0 0 18%, transparent 19%),
+      radial-gradient(circle at 55% 100%, #97cf90 0 22%, transparent 23%),
+      radial-gradient(circle at 85% 100%, #a8d8a0 0 20%, transparent 21%);
+    animation: roadMove 14s linear infinite;
+  }
+  .road {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    height: 120px;
+    background: #5a6470;
+    border-top: 6px solid #4a525c;
+  }
+  .road-dashes {
+    position: absolute;
+    bottom: 92px;
+    width: 200%;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #ffd94d 0 70px, transparent 70px 140px);
+    animation: roadMove 1.1s linear infinite;
+  }
+  @keyframes roadMove {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .scene {
+    position: absolute;
+    bottom: 118px;
+    left: 50%;
+    width: 560px;
+    height: 460px;
+    transform: translateX(-50%);
+  }
+  .rider {
+    position: absolute;
+    inset: 0;
+    animation: bob 0.5s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+  .wheel {
+    position: absolute;
+    bottom: 0;
+    width: 170px;
+    height: 170px;
+    border: 12px solid #2c3e50;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 58%, rgba(255,255,255,.08) 59%);
+    animation: spin 1s linear infinite;
+  }
+  .wheel.front { right: 20px; }
+  .wheel.back  { left: 20px; }
+  .spokes {
+    position: absolute;
+    inset: 0;
+  }
+  .spokes::before, .spokes::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 4px;
+    background: #95a5a6;
+    transform: translate(-50%, -50%);
+  }
+  .spokes::after { transform: translate(-50%, -50%) rotate(60deg); }
+  .hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    background: #e67e22;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .frame {
+    position: absolute;
+    bottom: 80px;
+    left: 90px;
+    width: 300px;
+    height: 110px;
+  }
+  .frame i {
+    position: absolute;
+    background: #e74c3c;
+    border-radius: 6px;
+  }
+  .frame .f1 { width: 150px; height: 10px; bottom: 10px; left: 6px; transform: rotate(-4deg); }
+  .frame .f2 { width: 10px;  height: 96px; bottom: 6px;  left: 148px; transform: rotate(14deg); }
+  .frame .f3 { width: 132px; height: 10px; top: 2px; right: 6px; transform: rotate(-18deg); }
+  .frame .f4 { width: 120px; height: 10px; bottom: 12px; right: -2px; transform: rotate(10deg); }
+  .handlebar {
+    position: absolute;
+    bottom: 168px;
+    right: 66px;
+    width: 12px;
+    height: 56px;
+    background: #2c3e50;
+    border-radius: 6px;
+    transform: rotate(16deg);
+  }
+  .handlebar::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -20px;
+    width: 46px;
+    height: 12px;
+    background: #2c3e50;
+    border-radius: 8px;
+    transform: rotate(-24deg);
+  }
+  .seat {
+    position: absolute;
+    bottom: 196px;
+    left: 118px;
+    width: 66px;
+    height: 16px;
+    background: #34495e;
+    border-radius: 10px 16px 6px 6px;
+  }
+  .seat-post {
+    position: absolute;
+    bottom: 156px;
+    left: 146px;
+    width: 10px;
+    height: 46px;
+    background: #7f8c8d;
+    transform: rotate(6deg);
+  }
+  .crank {
+    position: absolute;
+    bottom: 58px;
+    left: 212px;
+    width: 84px;
+    height: 84px;
+    animation: spin 1s linear infinite;
+  }
+  .crank .arm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 76px;
+    background: #34495e;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+  }
+  .crank .pedal {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 30px;
+    height: 10px;
+    margin-left: -15px;
+    background: #e67e22;
+    border-radius: 4px;
+  }
+  .crank .pedal.p2 { top: auto; bottom: 2px; }
+  .pelican {
+    position: absolute;
+    bottom: 200px;
+    left: 130px;
+    width: 220px;
+    height: 240px;
+  }
+  .body {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    width: 170px;
+    height: 120px;
+    background: linear-gradient(#fdfefe, #e8eef0);
+    border-radius: 58% 60% 46% 50% / 62% 66% 40% 44%;
+    box-shadow: inset -10px -8px 0 rgba(0,0,0,.05);
+  }
+  .tail {
+    position: absolute;
+    bottom: 84px;
+    left: -14px;
+    width: 56px;
+    height: 26px;
+    background: #dfe6e9;
+    border-radius: 40% 8px 8px 40%;
+    transform: rotate(-24deg);
+  }
+  .neck {
+    position: absolute;
+    bottom: 108px;
+    left: 128px;
+    width: 30px;
+    height: 90px;
+    background: #fdfefe;
+    border-radius: 18px;
+    transform: rotate(18deg);
+    transform-origin: bottom center;
+    animation: neckSway 0.5s ease-in-out infinite;
+  }
+  @keyframes neckSway {
+    0%, 100% { transform: rotate(18deg); }
+    50% { transform: rotate(15deg); }
+  }
+  .head {
+    position: absolute;
+    bottom: 178px;
+    left: 128px;
+    width: 78px;
+    height: 64px;
+    background: #fdfefe;
+    border-radius: 55% 60% 50% 45%;
+  }
+  .head .eye {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    width: 14px;
+    height: 14px;
+    background: #2c3e50;
+    border-radius: 50%;
+    animation: blink 4s infinite;
+  }
+  .head .eye::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  @keyframes blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+  }
+  .beak {
+    position: absolute;
+    top: 26px;
+    left: 58px;
+    width: 118px;
+    height: 26px;
+    background: linear-gradient(#f6b93b, #e67e22);
+    border-radius: 4px 20px 20px 4px;
+    transform: rotate(6deg);
+    transform-origin: left center;
+  }
+  .pouch {
+    position: absolute;
+    top: 48px;
+    left: 60px;
+    width: 96px;
+    height: 34px;
+    background: #f8c471;
+    border-radius: 6px 10px 26px 30px;
+    transform: rotate(8deg);
+    transform-origin: top left;
+    animation: pouchWobble 0.5s ease-in-out infinite;
+  }
+  @keyframes pouchWobble {
+    0%, 100% { transform: rotate(8deg) scaleY(1); }
+    50% { transform: rotate(8deg) scaleY(1.12); }
+  }
+  .head .crest {
+    position: absolute;
+    top: -6px;
+    left: 18px;
+    width: 26px;
+    height: 16px;
+    background: #fdfefe;
+    border-radius: 60% 60% 0 0;
+  }
+  .wing {
+    position: absolute;
+    bottom: 66px;
+    left: 66px;
+    width: 96px;
+    height: 52px;
+    background: #eef2f3;
+    border: 2px solid #d5dbdb;
+    border-radius: 70% 30% 60% 20% / 80% 50% 50% 30%;
+    transform-origin: left top;
+    animation: flap 0.5s ease-in-out infinite;
+  }
+  @keyframes flap {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-7deg); }
+  }
+  .scarf {
+    position: absolute;
+    bottom: 172px;
+    left: 148px;
+    width: 42px;
+    height: 14px;
+    background: #e74c3c;
+    border-radius: 8px;
+    transform: rotate(-8deg);
+  }
+  .scarf-tail {
+    position: absolute;
+    bottom: 168px;
+    left: 108px;
+    width: 52px;
+    height: 12px;
+    background: #e74c3c;
+    border-radius: 8px;
+    transform-origin: right center;
+    animation: scarfFlow 0.7s ease-in-out infinite;
+  }
+  @keyframes scarfFlow {
+    0%, 100% { transform: rotate(-14deg); }
+    50% { transform: rotate(-28deg); }
+  }
+  .legs {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .leg {
+    position: absolute;
+    width: 10px;
+    height: 64px;
+    background: #f39c12;
+    border-radius: 6px;
+    transform-origin: top center;
+  }
+  .leg.l1 { bottom: 66px; left: 226px; animation: pedalA 1s linear infinite; }
+  .leg.l2 { bottom: 66px; left: 226px; animation: pedalB 1s linear infinite; }
+  .leg::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 22px;
+    height: 10px;
+    background: #e67e22;
+    border-radius: 6px;
+    transform: translateX(-50%);
+  }
+  @keyframes pedalA {
+    0%   { transform: rotate(18deg); }
+    25%  { transform: rotate(38deg); }
+    50%  { transform: rotate(18deg); }
+    75%  { transform: rotate(-2deg); }
+    100% { transform: rotate(18deg); }
+  }
+  @keyframes pedalB {
+    0%   { transform: rotate(-2deg); }
+    25%  { transform: rotate(18deg); }
+    50%  { transform: rotate(38deg); }
+    75%  { transform: rotate(18deg); }
+    100% { transform: rotate(-2deg); }
+  }
+  .speed-lines {
+    position: absolute;
+    bottom: 210px;
+    left: -60px;
+    width: 70px;
+    height: 60px;
+  }
+  .speed-lines span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,.75);
+    border-radius: 4px;
+    animation: whoosh 0.6s linear infinite;
+  }
+  .speed-lines span:nth-child(1) { top: 0; }
+  .speed-lines span:nth-child(2) { top: 26px; animation-delay: .2s; width: 70%; }
+  .speed-lines span:nth-child(3) { top: 52px; animation-delay: .35s; width: 55%; }
+  @keyframes whoosh {
+    from { transform: translateX(40px); opacity: 0; }
+    30%  { opacity: 1; }
+    to   { transform: translateX(-70px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sun"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="hills"></div>
+  <div class="road"></div>
+  <div class="road-dashes"></div>
+
+  <div class="scene">
+    <div class="speed-lines"><span></span><span></span><span></span></div>
+
+    <div class="rider">
+      <div class="wheel back"><div class="spokes"></div><div class="hub"></div></div>
+      <div class="wheel front"><div class="spokes"></div><div class="hub"></div></div>
+      <div class="frame"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i></div>
+      <div class="handlebar"></div>
+      <div class="seat-post"></div>
+      <div class="seat"></div>
+      <div class="crank">
+        <div class="arm"></div>
+        <div class="pedal p1"></div>
+        <div class="pedal p2"></div>
+      </div>
+
+      <div class="legs">
+        <div class="leg l1"></div>
+        <div class="leg l2"></div>
+      </div>
+
+      <div class="pelican">
+        <div class="tail"></div>
+        <div class="body"></div>
+        <div class="neck"></div>
+        <div class="head">
+          <div class="crest"></div>
+          <div class="eye"></div>
+          <div class="beak"></div>
+          <div class="pouch"></div>
+        </div>
+        <div class="scarf"></div>
+        <div class="scarf-tail"></div>
+        <div class="wing"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script data-pelican-scroll>window.addEventListener("load",function(){requestAnimationFrame(function(){var d=document.documentElement,b=document.body,w=Math.max(d.scrollWidth,b?b.scrollWidth:0),h=Math.max(d.scrollHeight,b?b.scrollHeight:0);window.scrollTo(Math.max(0,(w-window.innerWidth)/2),Math.max(0,(h-window.innerHeight)/2))})});</script></body>
+</html>
